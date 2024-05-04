@@ -2,117 +2,65 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  *
+ * Generated with the TypeScript template
+ * https://github.com/react-native-community/react-native-template-typescript
+ *
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+/**
+ * USE YARN.
+ * NPM IS SUCKS
+ */
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+import React from "react";
+import { DefaultTheme } from "./tmd";
+import AppNavigation from "./src/navigations/AppNavigation";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import BottomSheetProvider from "./tmd/providers/BottomSheetProvider";
+import { Host } from "react-native-portalize";
+import PermissionProvider from "./tmd/providers/PermissionProvider";
+import LocaleProvider from "./src/providers/LocaleProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AuthProvider from "./src/providers/AuthProvider";
+import { Provider } from "react-redux";
+import { persistor, store } from "./src/redux/stores/store";
+import { PersistGate } from "redux-persist/integration/react";
+import ModalProvider from "./tmd/providers/ModalProvider";
+import { RootSiblingParent } from "react-native-root-siblings";
+import ThemeProvider from "./tmd/providers/ThemeProvider";
+import { OrientationLocker, PORTRAIT } from "react-native-orientation-locker";
+// Create a client
+const queryClient = new QueryClient();
+const App = () => {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <GestureHandlerRootView style={{ flex: 1 }}>{/* content */}
+          <QueryClientProvider client={queryClient}>
+            <ThemeProvider initialTheme={DefaultTheme}>
+              <RootSiblingParent>
+                <LocaleProvider>
+                  <Host>
+                    <BottomSheetProvider>
+                      <ModalProvider>
+                        <PermissionProvider>
+                          <AuthProvider>
+                            <OrientationLocker orientation={PORTRAIT} />
+                            <AppNavigation />
+                          </AuthProvider>
+                        </PermissionProvider>
+                      </ModalProvider>
+                    </BottomSheetProvider>
+                  </Host>
+                </LocaleProvider>
+              </RootSiblingParent>
+            </ThemeProvider>
+          </QueryClientProvider>
+        </GestureHandlerRootView>
+      </PersistGate>
+    </Provider>
   );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+};
 
 export default App;
