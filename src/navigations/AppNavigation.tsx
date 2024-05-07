@@ -4,12 +4,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { navigationRef } from "./RootNavigation";
-import { useAuth } from "../providers/AuthProvider";
 import { useTheme } from "../../tmd/providers/ThemeProvider";
 import SplashScreen from "../screens/SplashScreen";
+import { rootReducer } from "../redux/stores/store";
+import { useSelector } from "react-redux";
+import TransactionEditScreen from "../screens/transaction/TransactionEditScreen";
 
 const AppNavigation = () => {
   const Stack = createNativeStackNavigator<AppNavigationType>();
+  const { isLoading: isLoadingSplash } = useSelector((state: ReturnType<typeof rootReducer>) => state.splashReducer);
   const { theme } = useTheme();
   const NavTheme = {
     ...theme,
@@ -32,6 +35,7 @@ const AppNavigation = () => {
         ) : (
           <>
             <Stack.Screen name={"MainScreen"} component={MainScreen} />
+            <Stack.Screen name={"TransactionEditScreen"} component={TransactionEditScreen} />
           </>
         )}
       </Stack.Navigator>

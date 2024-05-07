@@ -5,19 +5,17 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import enJson from "../assets/locale/en.json";
-import idJson from "../assets/locale/id.json";
 import RNLanguageDetector from "@os-team/i18next-react-native-language-detector";
 
 const resources = {
   en: enJson,
-  id: idJson,
 };
 i18n
   .use(RNLanguageDetector)
   .use(initReactI18next)
   .init({
     compatibilityJSON: "v3",
-    supportedLngs: ["en", "id"],
+    supportedLngs: ["en"],
     resources,
     fallbackLng: "en",
     interpolation: {

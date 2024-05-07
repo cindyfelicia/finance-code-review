@@ -4,3 +4,10 @@ export interface BudgetModel {
     categories_id: number[];
     amount: number;
 }
+
+export interface BudgetAnalysisModel {
+    id: number;
+    name: string;
+    percentage: number;
+    icon: string;
+}

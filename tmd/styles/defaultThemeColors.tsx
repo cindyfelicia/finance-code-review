@@ -363,11 +363,11 @@ const defaultThemeColors: ThemeColors = {
   },
   text: {
     primary: "#0A0A0A",
-    secondary: "#404040",
+    secondary: "#BBF1F5",
     tertiary: "#616161",
     placeholder: "#757575",
     muted: "#9E9E9E",
-    brand: "#974837"
+    brand: "#49C6CD"
   },
   surface: {
     surface_100: "#FFFFFF",

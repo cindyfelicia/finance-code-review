@@ -1,12 +1,13 @@
 export type BottomTabNavigationType = {
-  ButtonScreen: undefined;
-  AlertScreen: undefined;
-  TagScreen: undefined;
-  ImageScreen: undefined;
+  HomeScreen: undefined;
+  CategoryScreen: undefined;
+  TransactionScreen: undefined;
+  BudgetScreen: undefined;
 };
 
 type AppNavigationType = {
   SplashScreen: undefined;
-  MainScreen: undefined
+  MainScreen: undefined;
+  TransactionEditScreen: { id: number };
 };
 export default AppNavigationType;

@@ -13,9 +13,12 @@ import Typography from '../../tmd/components/Typography/Typography';
 import { _componentGalleries } from '../data/_componentGalleries';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { isIos } from '../utils/platform';
-import { useAuth } from '../providers/AuthProvider';
 import { useIsFocused } from '@react-navigation/native';
 import { useLocale } from '../providers/LocaleProvider';
+import HomeScreen from './HomeScreen';
+import CategoryScreen from './category/CategoryScreen';
+import TransactionScreen from './transaction/TransactionScreen';
+import BudgetScreen from './budget/BudgetScreen';
 
 const MainScreen = ({ route }: NativeStackScreenProps<AppNavigationType, 'MainScreen'>) => {
   const Tab = createBottomTabNavigator();
@@ -53,29 +56,29 @@ const MainScreen = ({ route }: NativeStackScreenProps<AppNavigationType, 'MainSc
       return (
         <>
           {name == 'HomeScreen' && (
-            <>{<Icon icon={isFocused ? 'home' : 'home-outline'} color={usedColor} size={20} />}</>
+            <>{<Icon icon={isFocused ? 'ios-home' : 'ios-home-outline'} color={usedColor} size={20} />}</>
           )}
-          {name == 'MyAdsScreen' && (
+          {name == 'CategoryScreen' && (
             <>
-              {<Icon icon={isFocused ? 'rocket' : 'rocket-outline'} color={usedColor} size={20} />}
+              {<Icon icon={isFocused ? 'grid' : 'grid-outline'} color={usedColor} size={20} />}
             </>
           )}
-          {name == 'BantuanScreen' && (
+          {name == 'TransactionScreen' && (
             <>
               {
                 <Icon
-                  icon={isFocused ? 'chatbubble-ellipses' : 'chatbubble-ellipses-outline'}
+                  icon={isFocused ? 'git-compare' : 'git-compare-outline'}
                   color={usedColor}
                   size={20}
                 />
               }
             </>
           )}
-          {name == 'AkunScreen' && (
+          {name == 'BudgetScreen' && (
             <>
               {
                 <Icon
-                  icon={isFocused ? 'person-circle' : 'person-circle-outline'}
+                  icon={isFocused ? 'wallet' : 'wallet-outline'}
                   color={usedColor}
                   size={20}
                 />
@@ -171,24 +174,24 @@ const MainScreen = ({ route }: NativeStackScreenProps<AppNavigationType, 'MainSc
           }}
         />
         <Tab.Screen
-          name="MyAdsScreen"
-          component={MyAdsScreen}
+          name="CategoryScreen"
+          component={CategoryScreen}
           options={{
-            tabBarLabel: t('common.myAds'),
+            tabBarLabel: t('common.category'),
           }}
         />
         <Tab.Screen
-          name="BantuanScreen"
-          component={BantuanScreen}
+          name="TransactionScreen"
+          component={TransactionScreen}
           options={{
-            tabBarLabel: t('common.help'),
+            tabBarLabel: t('common.transaction'),
           }}
         />
         <Tab.Screen
-          name="AkunScreen"
-          component={AkunScreen}
+          name="BudgetScreen"
+          component={BudgetScreen}
           options={{
-            tabBarLabel: t('common.account'),
+            tabBarLabel: t('common.budget'),
           }}
         />
       </Tab.Navigator>

@@ -41,7 +41,7 @@ export default function Toolbar({
                                   variant,
                                 }: Props) {
   const { colors, toolbar } = appTheme();
-  const usedBg = backgroundColor || colors.surface.surface_300;
+  const usedBg = backgroundColor || colors.surface.surface_100;
   const isLight = Color(usedBg).isLight();
   const usedTitleColor = "#404040";
   const usedDescColor = colors.neutral.neutral_80;
