@@ -32,7 +32,7 @@ const TransactionItem = ({
           marginHorizontal: 16,
           marginVertical: 8,
           borderRadius: 8,
-          borderColor: colors.primary.main,
+          borderColor: colors.border.primary,
           borderWidth: 1 }}
         >
           <Icon

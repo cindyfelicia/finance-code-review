@@ -7,39 +7,37 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack/lib/types
 import { Button, Chip, Page, RHFDatePicker, RHFTextField, Stack, Toolbar } from "../../../tmd";
 import { useLocale } from "../../providers/LocaleProvider";
 import { Dimensions, ScrollView } from "react-native";
-import { TransactionType } from "../../models/TransactionModel";
+import { TransactionAccount, TransactionType } from "../../models/TransactionModel";
 import { _transactionAccount, _transactionType } from "../../data/_baseTransaction";
 import { capitalize } from "lodash";
+import Select from "../../../tmd/components/Select/Select";
+import { _baseExpensesCategories, _baseIncomeCategories } from "../../data/_baseCategories";
+import { CategoriesModel } from "../../models/CategoriesModel";
 
 const TransactionEditScreen = ({route, ...props} : NativeStackScreenProps<AppNavigationType, "TransactionEditScreen">) => {
-  const [selectedTransType, setTransType] = useState<string>(TransactionType.EXPENSES);
+  const [selectedTransType, setTransType] = useState<TransactionType>(TransactionType.EXPENSES);
+  const [selectedTransAccount, setTransAcc] = useState<TransactionAccount>();
+  const [selectedCategory, setCategory] = useState<number>();
   const { t } = useLocale();
   const { id } = route.params;
 
+  const categories = [..._baseExpensesCategories, ..._baseIncomeCategories];
+
   const schema = yup.object({
-    // type: yup.string().required(),
     date: yup.string().required(),
     amount: yup.string().required(),
-    category: yup.string().required(),
-    account: yup.string().required(),
-    notes: yup.string()
   })
 
   const method = useForm({
     defaultValues: {
-      // type: selectedTransType,
-      // date: Date(),
       date: "Sun May 05 2024 13:31:19 GMT+0800",
       amount: 0,
-      category: null,
-      account: null,
-      notes: null
     },
     mode: "onBlur",
     resolver: yupResolver(schema),
   })
 
-  const onSubmit = async (data) => { console.log(data, selectedTransType);
+  const onSubmit = async (data) => { console.log(data, selectedCategory, selectedTransAccount, selectedTransType);
   }
 
   return (
@@ -72,14 +70,22 @@ const TransactionEditScreen = ({route, ...props} : NativeStackScreenProps<AppNav
             prefixText="Rp"
             placeholder={t("transaction.amount")}
           />
-          <RHFTextField
+          <Select
             mode="contained"
-            name="category"
+            shape="rect"
+            onSelectedValueChange={(value)=> {
+              let category = categories.filter((value1) => value1.id == value)[0]
+              console.log(value, category);
+              
+              setCategory(value)}}
+            options={categories.filter(value => value.type == selectedTransType)}
             placeholder={t("transaction.category")}
           />
-          <RHFTextField
+          <Select
             mode="contained"
-            name="account"
+            shape="rect"
+            onSelectedValueChange={(value)=> {setTransAcc(TransactionAccount[value.toUpperCase()])}}
+            options={_transactionAccount}
             placeholder={t("transaction.account")}
           />
           <RHFTextField
@@ -93,7 +99,7 @@ const TransactionEditScreen = ({route, ...props} : NativeStackScreenProps<AppNav
       </ScrollView>
       <Stack p={20}>
         <Button
-          buttonStyle={{ width: Dimensions.get("screen").width - 40}}
+          buttonStyle={{ width: Dimensions.get("screen").width - 40}} shape="rect"
           onPress={method.handleSubmit(onSubmit, async (e) => {
             console.log(e);
           })}

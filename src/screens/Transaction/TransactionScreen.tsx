@@ -71,7 +71,7 @@ const TransactionScreen = () => {
                         onPress={() => console.log("add")}
                         />
                 }
-                 />
+            />
             <FlatList
                 data={transaction.sort((a, b) => {
                     const dateA = new Date(a.date);
