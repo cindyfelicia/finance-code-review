@@ -37,7 +37,8 @@ const TransactionEditScreen = ({route, ...props} : NativeStackScreenProps<AppNav
     resolver: yupResolver(schema),
   })
 
-  const onSubmit = async (data) => { console.log(data, selectedCategory, selectedTransAccount, selectedTransType);
+  const onSubmit = async (data) => {
+    console.log(data, selectedCategory, selectedTransAccount, selectedTransType);
   }
 
   return (
@@ -52,7 +53,7 @@ const TransactionEditScreen = ({route, ...props} : NativeStackScreenProps<AppNav
                 style={{ flex: 1, marginHorizontal: 10 }}
                 variant="outlined" shape="rect"
                 selected={selectedTransType == item.id}
-                onPress={() => setTransType(TransactionType[item.name.toUpperCase()])}
+                onPress={() => setTransType(TransactionType[item.name?.toUpperCase()])}
                 text={capitalize(item.name)}
               />
             </> })}
@@ -84,7 +85,7 @@ const TransactionEditScreen = ({route, ...props} : NativeStackScreenProps<AppNav
           <Select
             mode="contained"
             shape="rect"
-            onSelectedValueChange={(value)=> {setTransAcc(TransactionAccount[value.toUpperCase()])}}
+            onSelectedValueChange={(value)=> {setTransAcc(TransactionAccount[value?.toUpperCase()])}}
             options={_transactionAccount}
             placeholder={t("transaction.account")}
           />

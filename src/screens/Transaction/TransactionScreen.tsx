@@ -73,6 +73,7 @@ const TransactionScreen = () => {
                 }
             />
             <FlatList
+                style={{ marginTop: 16 }}
                 data={transaction.sort((a, b) => {
                     const dateA = new Date(a.date);
                     const dateB = new Date(b.date);
