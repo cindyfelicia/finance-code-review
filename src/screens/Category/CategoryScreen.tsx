@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Button, Icon, IconButton, Page, Stack, Toolbar, appTheme } from "../../../tmd";
 import Typography from "../../../tmd/components/Typography/Typography";
-import IconPicker from "react-native-icon-picker";
 import { useLocale } from "../../providers/LocaleProvider";
 import { Dimensions, FlatList, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { _baseExpensesCategories, _baseIncomeCategories } from "../../data/_baseCategories";
 import CategoryItem from "../components/CategoryItem";
 import { CategoriesModel } from "../../models/CategoriesModel";
 import { defaultThemeColors } from "../../../tmd/styles/defaultThemeColors";
+import AddEditCategoryBS from "./AddEditCategory";
 
 const CategoryScreen = () => {
-    const [showIconPicker, setShowIconPicker] = useState(false);
+    const [editCategoryItem, setEditedCategoryItem] = useState<CategoriesModel|null>()
+    const [isShowEditBS, setShowEditBS] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [selected, setSelected] = useState<CategoriesModel[]>([]);
     const { colors } = appTheme();
@@ -19,6 +20,8 @@ const CategoryScreen = () => {
 
     const onEdit = (item: CategoriesModel) => {
         console.log("EDIT", item);
+        setEditedCategoryItem(item);
+        setShowEditBS(true);
     }
 
     const onRemoveSelectedItem = () => {
@@ -28,13 +31,13 @@ const CategoryScreen = () => {
 
     const onItemSelected = (item: CategoriesModel) => {
         if (isEditing) {
-        let index = selected?.indexOf(item);
-        if (index >= 0) {
-            let update = selected?.filter(value => value != item);
-            setSelected(update);
-        } else {
-            setSelected([item, ...selected]);
-        }
+            let index = selected?.indexOf(item);
+            if (index >= 0) {
+                let update = selected?.filter(value => value != item);
+                setSelected(update);
+            } else {
+                setSelected([item, ...selected]);
+            }
         }
     }
 
@@ -63,7 +66,10 @@ const CategoryScreen = () => {
                             variant="tertiary"
                             style={styles.actionButton}
                             color={colors.primary.main} icon="add"
-                            onPress={() => console.log("add")}
+                            onPress={() => {
+                                console.log("add");
+                                setShowEditBS(true);
+                            }}
                             />
                     </Stack>
                 }
@@ -90,26 +96,14 @@ const CategoryScreen = () => {
             : <></>   
             }
         </Page>
-        <IconPicker
-            showIconPicker={showIconPicker}
-            toggleIconPicker={() => setShowIconPicker(!showIconPicker)}
-            iconDetails={[
-                { family: "AntDesign", color: "blue", icons: ["wallet"] },
-                { family: "Entypo", icons: ["wallet"] },
-                { family: "FontAwesome", icons: ["google-wallet"] },
-                { family: "FontAwesome5", icons: ["wallet"] },
-                { family: "Fontisto", icons: ["wallet"] },
-                {
-                    family: "MaterialCommunityIcons",
-                    icons: ["wallet-membership"]
-                },
-                { family: "MaterialIcons", icons: ["wallet-travel"] }
-                ]
-            }
-            // content={<Icon icon={"add"}/> }
-            content={<></>}
-            onSelect={(icon) => console.log(icon)}
-        />
+            <AddEditCategoryBS
+                isOpen={isShowEditBS}
+                data={editCategoryItem}
+                onClose={() => {
+                    setShowEditBS(false)
+                    setEditedCategoryItem(null);
+                }}
+            />
         </>
     );
 }

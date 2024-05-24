@@ -68,7 +68,7 @@ const TransactionScreen = () => {
                         variant="tertiary"
                         style={{ paddingHorizontal: 8}}
                         color={colors.primary.main} icon="add"
-                        onPress={() => console.log("add")}
+                        onPress={() => navigate("TransactionEditScreen") }
                         />
                 }
             />

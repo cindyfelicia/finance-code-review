@@ -69,8 +69,8 @@ const HomeScreen = () => {
                                 pickerList={pickerItems}
                                 type="picker"
                                 text={pickerItems.find((value) => value.id == selectedMonth)?.name}
-                                pickerTitle="Select Month"
-                                variant="filled"
+                                pickerTitle="Select Month" selected
+                                variant="outlined" colorVariant="primary"
                                 onPickerChanges={(item) => { setSelectedMonth(item?.id) }}
                             />
                             <Typography

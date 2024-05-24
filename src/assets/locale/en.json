@@ -94,6 +94,17 @@
       "category": "Category",
       "account": "Account",
       "notes": "Notes"
+    },
+    "category": {
+      "add_category": "Add Category",
+      "edit_category": "Edit Category"
+    },
+    "budget": {
+      "add_budget": "Add Budget",
+      "edit_budget": "Edit Budget",
+      "name": "Budget Name",
+      "amount": "Amount",
+      "category": "Category"
     }
   }
 }

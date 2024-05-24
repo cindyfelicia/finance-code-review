@@ -8,6 +8,8 @@ export type BottomTabNavigationType = {
 type AppNavigationType = {
   SplashScreen: undefined;
   MainScreen: undefined;
-  TransactionEditScreen: { id: number };
+  TransactionEditScreen: {
+    id?: number
+  };
 };
 export default AppNavigationType;
